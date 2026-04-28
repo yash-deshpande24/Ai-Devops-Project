@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login - Smart AI DevOps</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #020617;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: rgba(0,0,0,0.85);
+            padding: 30px;
+            border-radius: 10px;
+            width: 320px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .msg {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>🔐 Login</h2>
+
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <div id="msg" class="msg"></div>
+
+    <p onclick="goRegister()" style="cursor:pointer;color:lightblue;">
+        Create account
+    </p>
+</div>
+
+<script>
+function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const msg = document.getElementById("msg");
+
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!storedUser) {
+        msg.style.color = "red";
+        msg.innerText = "❌ No user found. Please register.";
+        return;
+    }
+
+    if (email === storedUser.email && password === storedUser.password) {
+        localStorage.setItem("auth", "true");
+
+        msg.style.color = "lightgreen";
+        msg.innerText = "✅ Login successful";
+
+        setTimeout(() => {
+            window.location.href = "/ai-dashboard.html";
+        }, 1000);
+
+    } else {
+        msg.style.color = "red";
+        msg.innerText = "❌ Invalid credentials";
+    }
+}
+
+function goRegister() {
+    window.location.href = "/register.html";
+}
+</script>
+
+</body>
+</html>
